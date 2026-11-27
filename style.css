@@ -11,7 +11,7 @@
   --surface-color: rgba(255, 255, 255, 0.6);
   --surface-color-hover: rgba(217, 164, 65, 0.15);
   --highlight-color: rgba(217, 164, 65, 0.25);
-  --switch-bg-url: url(.assets/moon-stars.svg);
+  --switch-bg-url: url(./assets/moon-star.svg);
 }
 .light {
   --text-color: #02172d;
@@ -20,7 +20,7 @@
   --surface-color: rgba(255, 255, 255, 0.6);
   --surface-color-hover: rgba(217, 164, 65, 0.15);
   --highlight-color: rgba(217, 164, 65, 0.25);
-  --switch-bg-url: url(.assets/suns-stars.svg);
+  --switch-bg-url: url(./assets/suns.svg);
 }
 
 body {
@@ -33,6 +33,9 @@ body * {
 }
 
 #container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: 588px;
   margin: 56px auto 0px;
@@ -40,6 +43,7 @@ body * {
 }
 #profile {
   text-align: center;
+  width: 100%;
   padding: 24px;
 }
 #profile img {
@@ -93,6 +97,17 @@ ul {
   gap: 16px;
   padding: 24px 0;
 }
+#profile,
+#list,
+#social-links,
+footer {
+  width: 100%;
+}
+
+#list li,
+#list li a {
+  width: 100%;
+}
 
 ul li a {
   display: flex;
@@ -106,12 +121,72 @@ ul li a {
   -webkit-backdrop-filter: blur(4px);
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.3s;
+  transition: background 0.3s, border-color 0.3s;
 }
 
-ul li a :hover {
+ul li a.cta {
+  background: #D9A441;
+  color: #02172D;
+  font-weight: 700;
+  border-color: #D9A441;
+  position: relative;
+  overflow:hidden;
+}
+
+ul li a .cta:hover{
+  background: #c89333;
+  border-color: #c89333;
+}
+
+ul li a.cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.45), transparent);
+  animation: brilho 3.5s infinite;
+}
+
+ul li a:hover {
   background: var(--surface-color-hover);
-  border: 1.5px solid var(--text-color);
+  border-color: var(--text-color);
+}
+
+:root:not(.light) ul li a.cta:hover {
+  color: #D9A441;
+}
+
+.seguradoras {
+  width: 100%;
+  overflow: hidden;
+  padding: 16px 0;
+  /* Suaviza as bordas esquerda e direita */
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.seguradoras-track {
+  display: flex;
+  width: max-content;
+  animation: rolar 18s linear infinite;
+}
+
+/* Pausa a faixa se o usuário passar o mouse/dedo */
+.seguradoras:hover .seguradoras-track {
+  animation-play-state: paused;
+}
+
+.seguradoras-track span {
+  margin-right: 28px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-color);
+  opacity: 0.65;
+  white-space: nowrap;
 }
 
 #social-links {
@@ -123,6 +198,7 @@ ul li a :hover {
 }
 
 #social-links a {
+  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -170,5 +246,54 @@ ul li a :hover {
   }
   to {
     left: 0;
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#profile {
+  animation: fadeUp 0.6s ease both;
+}
+
+#switch {
+  animation: fadeUp 0.6s ease 0.15s both;
+}
+
+ul li {
+  animation: fadeUp 0.6s ease both;
+}
+
+/* Atraso em escadinha para cada botão */
+ul li:nth-child(1) { animation-delay: 0.25s; }
+ul li:nth-child(2) { animation-delay: 0.35s; }
+ul li:nth-child(3) { animation-delay: 0.45s; }
+ul li:nth-child(4) { animation-delay: 0.55s; }
+
+@keyframes brilho {
+  0% {
+    left: -100%;
+  }
+  25% {
+    left: 150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+@keyframes rolar {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
